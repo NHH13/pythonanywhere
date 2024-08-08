@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reentrenar el Modelo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Reentrenar el Modelo de Precios de Casas</h1>
+    </header>
+    <main>
+        <img src="{{ url_for('static', filename='images/retrain.jpg') }}" alt="Reentrenamiento" class="section-image">
+        <section class="retrain-section">
+            <h2>Actualizar el Modelo con Nuevos Datos</h2>
+            <p>Haz clic en el botón para reentrenar el modelo usando el conjunto de datos más reciente.</p>
+            <button id="retrain-button" class="retrain-button">Reentrenar Modelo</button>
+            <div id="result"></div>
+        </section>
+        <button onclick="goBack()" class="back-button">Volver Atrás</button>
+    </main>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        document.getElementById('retrain-button').addEventListener('click', async function() {
+            const resultDiv = document.getElementById('result');
+
+            try {
+                const response = await fetch('/api/v1/retrain', {
+                    method: 'POST'
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.innerHTML = `<h3>${data.message}</h3>`;
+                } else {
+                    resultDiv.innerHTML = `<h3>Error: ${data.error}</h3>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<h3>Error: ${error.message}</h3>`;
+            }
+        });
+    </script>
+</body>
+</html>

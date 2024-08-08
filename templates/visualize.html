@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Datos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Visualizar Datos del Modelo</h1>
+    </header>
+    <main>
+        <img src="{{ url_for('static', filename='images/visualizacion.jpg') }}" alt="Visualización" class="section-image">
+        <section class="visualization-section">
+            <h2>Datos Utilizados por el Modelo</h2>
+            <div>
+                <label for="file-select">Selecciona el archivo:</label>
+                <select id="file-select">
+                    <!-- Opciones de archivos se llenarán aquí -->
+                </select>
+                <button id="load-data">Cargar Datos</button>
+            </div>
+            <div id="data-table">
+                <!-- La tabla se insertará aquí -->
+            </div>
+        </section>
+        <button onclick="goBack()" class="back-button">Volver Atrás</button>
+    </main>
+    <script>
+        async function fetchFiles() {
+            try {
+                const response = await fetch('/api/v1/files');
+                const files = await response.json();
+                const fileSelect = document.getElementById('file-select');
+
+                // Limpiar opciones actuales
+                fileSelect.innerHTML = '';
+
+                // Añadir opciones para cada archivo disponible
+                files.forEach(file => {
+                    const option = document.createElement('option');
+                    option.value = file;
+                    option.textContent = file;
+                    fileSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error al cargar archivos:', error);
+            }
+        }
+
+        document.getElementById('load-data').addEventListener('click', async function() {
+            const file = document.getElementById('file-select').value;
+            const resultDiv = document.getElementById('data-table');
+
+            try {
+                const response = await fetch(`/api/v1/visualize?file=${file}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const table = document.createElement('table');
+                    const headerRow = document.createElement('tr');
+
+                    // Crear encabezados de tabla
+                    if (data.length > 0) {
+                        Object.keys(data[0]).forEach(key => {
+                            const th = document.createElement('th');
+                            th.textContent = key;
+                            headerRow.appendChild(th);
+                        });
+                        table.appendChild(headerRow);
+
+                        // Crear filas de tabla
+                        data.forEach(row => {
+                            const tr = document.createElement('tr');
+                            Object.values(row).forEach(value => {
+                                const td = document.createElement('td');
+                                td.textContent = value;
+                                tr.appendChild(td);
+                            });
+                            table.appendChild(tr);
+                        });
+
+                        resultDiv.innerHTML = '';
+                        resultDiv.appendChild(table);
+                    } else {
+                        resultDiv.innerHTML = '<p>No hay datos para mostrar.</p>';
+                    }
+                } else {
+                    resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Cargar los archivos CSV al cargar la página
+        window.onload = fetchFiles;
+    </script>
+</body>
+</html>

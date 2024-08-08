@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Predicción y Visualización</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Aplicación de Predicción y Visualización</h1>
+    </header>
+    <main class="main-container">
+        <div class="section-container">
+            <section class="section">
+                <img src="{{ url_for('static', filename='images/prediccion.jpg') }}" alt="Predicción" class="section-image">
+                <a href="/predict" class="section-link">Ir a Predicción</a>
+            </section>
+            <section class="section">
+                <img src="{{ url_for('static', filename='images/retrain.jpg') }}" alt="Reentrenar" class="section-image">
+                <a href="/retrain" class="section-link">Ir a Reentrenar</a>
+            </section>
+            <section class="section">
+                <img src="{{ url_for('static', filename='images/visualizacion.jpg') }}" alt="Visualización" class="section-image">
+                <a href="/visualize" class="section-link">Ir a Visualización</a>
+            </section>
+        </div>
+        <button onclick="goBack()" class="back-button">Volver Atrás</button>
+    </main>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
