@@ -6,12 +6,13 @@ from sklearn.linear_model import LinearRegression
 
 app = Flask(__name__)
 
+root_path = '/home/franpujalte/pythonanywhere/'
 # Directorio donde se encuentran los archivos CSV
 DATA_DIR = 'data/'
 
 # Función para cargar el modelo
 def load_model():
-    with open('model.pkl', 'rb') as file:
+    with open(root_path+'model.pkl', 'rb') as file:
         return pickle.load(file)
 
 # Cargar el modelo entrenado
@@ -48,7 +49,7 @@ def predict_api():
 def retrain_api():
     global model
     # Cargar los datos desde el nuevo archivo CSV para reentrenamiento
-    data = pd.read_csv(os.path.join(DATA_DIR, 'house_prices_retrain_sinteticos.csv'))  # Asegúrate de que la ruta al archivo CSV es correcta
+    data = pd.read_csv(root_path+os.path.join(DATA_DIR, 'house_prices_retrain_sinteticos.csv'))  # Asegúrate de que la ruta al archivo CSV es correcta
 
     # Convertir las columnas a tipo numérico
     data['size'] = pd.to_numeric(data['size'], errors='coerce')
@@ -67,7 +68,7 @@ def retrain_api():
     new_model.fit(X, y)
 
     # Guardar el modelo reentrenado en un archivo .pkl
-    with open('model.pkl', 'wb') as file:
+    with open(root_path+'model.pkl', 'wb') as file:
         pickle.dump(new_model, file)
 
     # Actualizar el modelo en memoria
@@ -80,11 +81,11 @@ def visualize_api():
     file_name = request.args.get('file')
     file_path = os.path.join(DATA_DIR, file_name)
 
-    if not os.path.isfile(file_path):
+    if not os.path.isfile(root_path+file_path):
         return jsonify({'error': 'Archivo no encontrado'}), 404
 
     try:
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(root_path+file_path)
         data = df.to_dict(orient='records')
         return jsonify(data)
     except Exception as e:
