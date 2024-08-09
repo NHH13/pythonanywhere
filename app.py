@@ -9,6 +9,7 @@ app = Flask(__name__)
 root_path = '/home/franpujalte/pythonanywhere/'
 # Directorio donde se encuentran los archivos CSV
 DATA_DIR = 'data/'
+app.config['JSON_SORT_KEYS'] = False
 
 # Función para cargar el modelo
 def load_model():
