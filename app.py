@@ -87,6 +87,10 @@ def visualize_api():
     try:
         df = pd.read_csv(root_path+file_path)
         data = df.to_dict(orient='records')
+        #cambiamos los nombres de las columnas de la tabla
+        data['size (m^2)'] = data.pop('size')
+        data['bedroom'] = data.pop('bedroom')
+        data['price (€)'] = data.pop('price')
         return jsonify(data)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
