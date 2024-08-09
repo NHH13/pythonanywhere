@@ -2,14 +2,18 @@ from flask import Flask, request, jsonify, render_template, send_from_directory
 import pickle
 import pandas as pd
 import os
+import json
 from sklearn.linear_model import LinearRegression
+from collections import OrderedDict
+from flask import Response
+
+
 
 app = Flask(__name__)
 
 root_path = '/home/franpujalte/pythonanywhere/'
 # Directorio donde se encuentran los archivos CSV
 DATA_DIR = 'data/'
-app.config['JSON_SORT_KEYS'] = False
 
 # Función para cargar el modelo
 def load_model():
@@ -88,8 +92,12 @@ def visualize_api():
     try:
         df = pd.read_csv(root_path+file_path)
         df = df.rename(columns={'size': 'Size (m^2)', 'bedrooms': 'Bedrooms', 'price':'Price (€)'})
-        data = df.to_dict(orient='records')
-        return jsonify(data)
+        data = [OrderedDict(row) for _, row in df.iterrows()]
+        json_data = json.dumps(data, ensure_ascii=False)
+
+        #data = df.to_dict(orient='records')
+        #return jsonify(data)
+        return Response(json_data, mimetype='application/json')
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
