@@ -95,7 +95,7 @@ def visualize_api():
 def list_files():
     try:
         # Listar todos los archivos CSV en el directorio de datos
-        files = [f for f in os.listdir(DATA_DIR) if f.endswith('.csv')]
+        files = [f for f in os.listdir(root_path+DATA_DIR) if f.endswith('.csv')]
         return jsonify(files)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
