@@ -15,26 +15,27 @@ Este proyecto consiste en desplegar un modelo de Machine Learning de regresión 
 ## Estructura del Proyecto
 
 El proyecto está organizado de la siguiente manera:
-
-TEAM_CHALLENGE_PYTHONANYWHERE/
-├── data/
-│   ├── house_prices_retrain_sinteticos.csv  # Dataset de entrenamiento para el reentrenamiento del modelo
-│   └── house_prices.csv                     # Dataset original para visualización y predicción
-├── static/
-│   ├── css/
-│   │   └── styles.css                       # Archivo de estilos CSS para el diseño de la aplicación
-│   └── images/
-│       ├── prediccion.jpg                   # Imagen para la sección de predicción
-│       ├── retrain.jpg                     # Imagen para la sección de reentrenamiento
-│       └── visualizacion.jpg               # Imagen para la sección de visualización
-├── templates/
-│   ├── index.html                           # Página principal con información sobre la API y enlaces a otras funciones
-│   ├── predict.html                         # Página para ingresar datos y obtener predicciones
-│   ├── retrain.html                         # Página para iniciar el reentrenamiento del modelo
-│   └── visualize.html                       # Página para visualizar datasets en forma de tablas
-├── model.pkl                                # Archivo de modelo serializado (pickle) para predicciones
-├── app.py                                   # Script principal de la aplicación Flask
-└── README.txt                                # Documento que describe el proyecto y su estructura
+```
+   TEAM_CHALLENGE_PYTHONANYWHERE/
+   ├── data/
+   │   ├── house_prices_retrain_sinteticos.csv  # Dataset de entrenamiento para el reentrenamiento del modelo
+   │   └── house_prices.csv                     # Dataset original para visualización y predicción
+   ├── static/
+   │   ├── css/
+   │   │   └── styles.css                       # Archivo de estilos CSS para el diseño de la aplicación
+   │   └── images/
+   │       ├── prediccion.jpg                   # Imagen para la sección de predicción
+   │       ├── retrain.jpg                     # Imagen para la sección de reentrenamiento
+   │       └── visualizacion.jpg               # Imagen para la sección de visualización
+   ├── templates/
+   │   ├── index.html                           # Página principal con información sobre la API y enlaces a otras funciones
+   │   ├── predict.html                         # Página para ingresar datos y obtener predicciones
+   │   ├── retrain.html                         # Página para iniciar el reentrenamiento del modelo
+   │   └── visualize.html                       # Página para visualizar datasets en forma de tablas
+   ├── model.pkl                                # Archivo de modelo serializado (pickle) para predicciones
+   ├── app.py                                   # Script principal de la aplicación Flask
+   └── README.txt                                # Documento que describe el proyecto y su estructura
+´´´
 
 ## Instrucciones de Uso
 
