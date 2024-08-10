@@ -70,7 +70,16 @@ def retrain_api():
 
     # Reentrenar el modelo de regresión lineal
     new_model = LinearRegression()
-    new_model.fit(X, y)
+    X_train, X_test, y_train, y_test = train_test_split(data.drop(columns=['price']),
+                                                    data['price'],
+                                                    test_size = 0.20,
+                                                    random_state=42)
+    new_model.fit(X_train, y_train)
+    cross_val_train_MSE = cross_val_score(model,X_train,y_train, cv = 4, scoring= "neg_mean_squared_error")
+    cross_val_train_MAPE = cross_val_score(model,X_train,y_train, cv = 4, scoring= "neg_mean_absolute_percentage_error")
+    mse_cross_val = -np.mean(cross_val_train_MSE)
+    rmse_cross_val = np.mean([np.sqrt(-mse_fold) for mse_fold in cross_val_train_MSE])
+    mape_cross_val = -np.mean(cross_val_train_MAPE)
 
     # Guardar el modelo reentrenado en un archivo .pkl
     with open(root_path+'model.pkl', 'wb') as file:
@@ -78,8 +87,8 @@ def retrain_api():
 
     # Actualizar el modelo en memoria
     model = load_model()
-
-    return jsonify({'message': 'Modelo reentrenado con éxito'})
+    
+    return jsonify({'message': f'Modelo reentrenado con éxito, nuevas metricas: \n "Train Mean Price": {y_train.mean()} \n MSE Cross:  {mse_cross_val}'})
 
 @app.route('/api/v1/visualize', methods=['GET'])
 def visualize_api():
