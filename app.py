@@ -77,7 +77,7 @@ def retrain_api():
     X_train, X_test, y_train, y_test = train_test_split(data.drop(columns=['price']),
                                                     data['price'],
                                                     test_size = 0.20,
-                                                    random_state=42)
+                                                    random_state=55)
     new_model.fit(X_train, y_train)
     cross_val_train_MSE = cross_val_score(model,X_train,y_train, cv = 4, scoring= "neg_mean_squared_error")
     cross_val_train_MAPE = cross_val_score(model,X_train,y_train, cv = 4, scoring= "neg_mean_absolute_percentage_error")
