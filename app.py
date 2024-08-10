@@ -93,7 +93,7 @@ def retrain_api():
     model = load_model()
     
     return jsonify({
-            'message': f'Modelo reentrenado con éxito, comparación de métricas: <br><br> Train Mean Price: <br> Antigua:  962095.01 Nueva: {round(y_train.mean(),2)} <br> <br> MSE Cross: <br> Antigua: 385379843.47 Nueva: {round(mse_cross_val,2)} <br> <br> RMSE Cross: <br> Antigua:  19624.15 Nueva: {round(rmse_cross_val,2)} <br><br> MAPE Cross: <br> Antigua: 0.019 Nueva: {round(mape_cross_val,2)} <br><br> MSE Test: <br> Antigua: 396271038.38 <br> Nueva: {round(mean_squared_error(y_test, model.predict(X_test)),2)} <br><br> RMSE Test: <br> Antigua: 19906.56 <br> Nueva: {round(np.sqrt(mean_squared_error(y_test, model.predict(X_test))),2)} <br><br> MAPE Test: <br> Antigua: 0.02 <br> Nueva: {round(mean_absolute_percentage_error(y_test, model.predict(X_test)),2)}'
+            'message': f'Modelo reentrenado con éxito, comparación de métricas: <br><br> Train Mean Price: <br> Antigua:  962095.01 <br> Nueva: {round(y_train.mean(),2)} <br> <br> MSE Cross: <br> Antigua: 385379843.47<br> Nueva: {round(mse_cross_val,2)} <br> <br> RMSE Cross: <br> Antigua:  19624.15 <br> Nueva: {round(rmse_cross_val,2)} <br><br> MAPE Cross: <br> Antigua: 0.019 <br> Nueva: {round(mape_cross_val,2)} <br><br> MSE Test: <br> Antigua: 396271038.38 <br> Nueva: {round(mean_squared_error(y_test, model.predict(X_test)),2)} <br><br> RMSE Test: <br> Antigua: 19906.56 <br> Nueva: {round(np.sqrt(mean_squared_error(y_test, model.predict(X_test))),2)} <br><br> MAPE Test: <br> Antigua: 0.02 <br> Nueva: {round(mean_absolute_percentage_error(y_test, model.predict(X_test)),2)}'
             })  
 
 @app.route('/api/v1/visualize', methods=['GET'])
