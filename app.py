@@ -93,7 +93,7 @@ def retrain_api():
     model = load_model()
     
     return jsonify({
-            'message': f'Modelo reentrenado con éxito, comparación de métricas: <br> Train Mean Price: <br> Antigua:  962095.01 Nueva: {round(y_train.mean(),2)} <br> MSE Cross: <br> Antigua: 385379843.47 Nueva: {round(mse_cross_val,2)} RMSE Cross: <br> Antigua:  19624.15 Nueva: {round(rmse_cross_val,2)} <br> MAPE Cross:: <br> Antigua: 0.019 Nueva: {round(mape_cross_val,2)}'
+            'message': f'Modelo reentrenado con éxito, comparación de métricas: <br><br> Train Mean Price: <br> Antigua:  962095.01 Nueva: {round(y_train.mean(),2)} <br> <br> MSE Cross: <br> Antigua: 385379843.47 Nueva: {round(mse_cross_val,2)} <br> <br> RMSE Cross: <br> Antigua:  19624.15 Nueva: {round(rmse_cross_val,2)} <br><br> MAPE Cross: <br> Antigua: 0.019 Nueva: {round(mape_cross_val,2)}'
             })  
 
 @app.route('/api/v1/visualize', methods=['GET'])
