@@ -6,6 +6,10 @@ import json
 from sklearn.linear_model import LinearRegression
 from collections import OrderedDict
 from flask import Response
+from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error
+from sklearn.model_selection import train_test_split, cross_val_score
+import numpy as np
+import pickle
 
 
 
@@ -88,7 +92,9 @@ def retrain_api():
     # Actualizar el modelo en memoria
     model = load_model()
     
-    return jsonify({'message': f'Modelo reentrenado con éxito, nuevas metricas: \n "Train Mean Price": {y_train.mean()} \n MSE Cross:  {mse_cross_val}'})
+    return jsonify({
+            'message': f'Modelo reentrenado con éxito, nuevas métricas: \n "Train Mean Price": {y_train.mean()} \n MSE Cross:  {mse_cross_val}'
+            })  
 
 @app.route('/api/v1/visualize', methods=['GET'])
 def visualize_api():
